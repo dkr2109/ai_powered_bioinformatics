@@ -9,10 +9,25 @@ mkdir assignment_3_data
 cd assignment_3_data
 
 # Select an organism, download its corresponding GFF file 
-wget https://ftp.ensembl.org/pub/current_gff3/bison_bison_bison/Bison_bison_bison.Bison_UMD1.0.113.gff3.gz
+URL="https://ftp.ensembl.org/pub/current_gff3/bison_bison_bison/Bison_bison_bison.Bison_UMD1.0.113.gff3.gz"
+GZ_FILE="Bison_bison_bison.Bison_UMD1.0.113.gff3.gz"
+GFF_FILE="Bison_bison_bison.Bison_UMD1.0.113.gff3"
 
-# Unzip the GFF file
-gunzip Bison_bison_bison.Bison_UMD1.0.113.gff3.gz
+if [ -f "$GFF_FILE" ]; then
+  echo "File $GFF_FILE already exists. Skipping download and unzip."
+else
+  # If not, download the compressed file if it doesn't exist
+  if [ ! -f "$GZ_FILE" ]; then
+    echo "Downloading $GZ_FILE..."
+    wget "$URL"
+  else
+    echo "Compressed file $GZ_FILE already exists. Skipping download."
+  fi
+
+  # Unzip the file
+  echo "Unzipping $GZ_FILE..."
+  gunzip "$GZ_FILE"
+fi
 
 # then investigate this file with Unix command line tools.
 
